@@ -1,0 +1,7 @@
+{
+  "name": "ExamFlow",
+  "description": "A premium mobile exam planner and notes management app for students. Track exams, quizzes, and study notes with subject-specific organization and smart reminders.",
+  "requestFramePermissions": [
+    "notifications"
+  ]
+}

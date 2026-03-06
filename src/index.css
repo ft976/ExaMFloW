@@ -1,0 +1,99 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700&display=swap');
+
+@theme {
+  --font-heading: "Clash Display", "Inter", sans-serif;
+  --font-body: "Bricolage Grotesque", sans-serif;
+  
+  --color-bg: var(--bg);
+  --color-surface1: var(--surface1);
+  --color-surface2: var(--surface2);
+  --color-lime: var(--lime);
+  --color-violet: var(--violet);
+  --color-coral: var(--coral);
+  --color-sky: var(--sky);
+  --color-gold: var(--gold);
+  --color-green: var(--green);
+  --color-pink: var(--pink);
+  --color-teal: var(--teal);
+  --color-orange: var(--orange);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+
+  --radius-chip: 8px;
+  --radius-input: 12px;
+  --radius-card: 16px;
+  --radius-modal: 28px;
+  --radius-pill: 100px;
+
+  --shadow-card: 0px 8px 32px rgba(0,0,0,0.4);
+}
+
+@layer base {
+  :root {
+    --bg: #0A0B10;
+    --surface1: #12141F;
+    --surface2: #1A1D2E;
+    --lime: #C8FF57;
+    --violet: #7B61FF;
+    --coral: #FF6B57;
+    --sky: #57C8FF;
+    --gold: #FFD257;
+    --green: #43E97B;
+    --pink: #FF57C8;
+    --teal: #57FFD8;
+    --orange: #FF9A57;
+    --text: #F2F4FF;
+    --muted: #7B80A0;
+    --dim: #555A78;
+  }
+
+  .light {
+    --bg: #FAFAFA;
+    --surface1: #FFFFFF;
+    --surface2: #F0F2F5;
+    --lime: #8BC34A;
+    --violet: #6200EA;
+    --coral: #D32F2F;
+    --sky: #0288D1;
+    --gold: #FBC02D;
+    --green: #388E3C;
+    --pink: #C2185B;
+    --teal: #00796B;
+    --orange: #E64A19;
+    --text: #1A1D2E;
+    --muted: #555A78;
+    --dim: #7B80A0;
+  }
+
+  body {
+    @apply bg-bg text-text font-body antialiased selection:bg-lime selection:text-bg;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+}
+
+.glow-lime {
+  box-shadow: 0px 0px 24px rgba(200,255,87,0.25);
+}
+
+.glow-violet {
+  box-shadow: 0px 0px 20px rgba(123,97,255,0.3);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-bg;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-surface2 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted;
+}
