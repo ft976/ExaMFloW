@@ -3,6 +3,10 @@
   <h1>ExamFlow</h1>
   <p><strong>A premium mobile exam planner and notes management app for students.</strong></p>
   
+  <p>
+    <a href="https://examflow-ten.vercel.app/"><strong>Explore the Live Demo »</strong></a>
+  </p>
+  
   [![React](https://img.shields.io/badge/React-19.0-blue.svg?style=flat-square&logo=react)](https://reactjs.org/)
   [![Vite](https://img.shields.io/badge/Vite-6.2-646CFF.svg?style=flat-square&logo=vite)](https://vitejs.dev/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC.svg?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
@@ -29,6 +33,15 @@ Built with modern web technologies, ExamFlow operates completely offline using l
 - 🌙 **Dark/Light Mode**: Beautifully designed themes that respect your system preferences.
 - ⚡ **Offline-First**: All data is securely stored on your device using `localStorage`. No internet connection required!
 - 🎨 **Fluid Animations**: Smooth page transitions and micro-interactions powered by Framer Motion.
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] **Cloud Sync**: Optional cloud backup using Firebase or Supabase.
+- [ ] **PDF Export**: Export your study notes as professional PDF documents.
+- [ ] **Study Timer**: Integrated Pomodoro timer to boost productivity.
+- [ ] **Collaborative Notes**: Share notes with classmates via unique links.
 
 ---
 
@@ -68,42 +81,77 @@ Using `framer-motion`, the app features:
 
 ---
 
-## 🗺️ Application Architecture & Flow
+## 🏗️ Architecture & Technical Design
+
+### System Overview
+
+ExamFlow is designed as a **Decentralized Client-Side Application**. It leverages the browser's native capabilities to provide a high-performance, low-latency experience without the need for a traditional backend.
 
 ### User Journey Flowchart
 
 ```mermaid
 graph TD
-    A[App Launch] --> B{Is First Visit?}
-    B -- Yes --> C[Onboarding Flow]
-    C --> D[Setup Profile & Preferences]
-    D --> E[Dashboard]
-    B -- No --> E[Dashboard]
+    Start([App Launch]) --> Auth{First Visit?}
+    Auth -- Yes --> Onboard[Onboarding Flow]
+    Onboard --> Profile[Setup Profile]
+    Profile --> Dash[Dashboard]
+    Auth -- No --> Dash
     
-    E --> F[Exams Tab]
-    E --> G[Notes Tab]
-    E --> H[Subjects Tab]
-    E --> I[Profile/Settings]
+    subgraph Core Modules
+    Dash --> Exams[Exams Tracker]
+    Dash --> Notes[Notes Manager]
+    Dash --> Subjects[Subject Organizer]
+    Dash --> Settings[User Preferences]
+    end
     
-    F --> J[Add/Edit Exam]
-    G --> K[Create/Edit Note]
-    H --> L[Manage Subjects]
-    I --> M[Toggle Theme/Notifications]
+    Exams --> CRUD_E[Create/Read/Update/Delete]
+    Notes --> CRUD_N[Create/Read/Update/Delete]
+    Subjects --> CRUD_S[Manage Categories]
+    
+    CRUD_E --> Sync[Local Persistence]
+    CRUD_N --> Sync
+    CRUD_S --> Sync
+    Settings --> Sync
 ```
 
-### Data Flow Architecture
+### Data Synchronization Strategy
+
+The application follows an **Optimistic UI** pattern. State changes are reflected instantly in the React tree, while a background process ensures the data is mirrored to `localStorage`.
 
 ```mermaid
 sequenceDiagram
+    autonumber
+    participant User as Student
     participant UI as React Components
     participant Context as AppContext (State)
-    participant Storage as LocalStorage
+    participant Storage as Browser LocalStorage
     
-    UI->>Context: Dispatch Action (e.g., addExam)
-    Context->>Context: Update React State
-    Context->>Storage: Sync to localStorage
-    Storage-->>Context: Confirm Save
-    Context-->>UI: Trigger Re-render with New Data
+    User->>UI: Interacts (e.g., adds new exam)
+    UI->>Context: Dispatches Action
+    Note over Context: State Updated (React)
+    Context-->>UI: Re-renders (Instant Feedback)
+    Context->>Storage: Serializes & Persists Data
+    Storage-->>Context: Acknowledge Persistence
+```
+
+---
+
+## 📂 Project Structure
+
+```text
+ExaMFloW/
+├── public/             # Static assets
+├── src/
+│   ├── components/     # Reusable UI components (Buttons, Cards, etc.)
+│   ├── context/        # AppContext for global state management
+│   ├── pages/          # Main application views (Dashboard, Exams, etc.)
+│   ├── types/          # TypeScript interfaces and types
+│   ├── App.tsx         # Main application routing and layout
+│   ├── main.tsx        # Entry point
+│   └── index.css       # Global styles (Tailwind CSS)
+├── package.json        # Dependencies and scripts
+├── tailwind.config.js  # Tailwind CSS configuration
+└── vite.config.ts      # Vite configuration
 ```
 
 ---
@@ -118,8 +166,8 @@ sequenceDiagram
 
 1. **Clone the repository** (or download the source code):
    ```bash
-   git clone <repository-url>
-   cd examflow
+   git clone https://github.com/rehan9703/ExaMFloW.git
+   cd ExaMFloW
    ```
 
 2. **Install dependencies**:
@@ -167,6 +215,18 @@ ExamFlow is a static Single Page Application (SPA), making it incredibly easy to
 ### Railway
 1. Create a new project and deploy from your GitHub repo.
 2. Railway will automatically build the project using Nixpacks.
+
+---
+
+## 👥 Contributors
+
+<div align="center">
+  <a href="https://github.com/rehan9703">
+    <img src="https://github.com/rehan9703.png" width="100px;" alt="rehan9703" style="border-radius: 50%;" />
+    <br />
+    <sub><b>rehan9703</b></sub>
+  </a>
+</div>
 
 ---
 
